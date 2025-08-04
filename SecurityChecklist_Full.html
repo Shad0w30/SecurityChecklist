@@ -1,0 +1,509 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Security Checklist</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <style>
+    body {
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      color: #eee;
+      font-family: 'Segoe UI', sans-serif;
+      padding: 2rem;
+    }
+    h1 {
+      color: #00ffe7;
+      text-shadow: 0 0 10px #00ffe7;
+    }
+    select, button {
+      padding: 10px;
+      font-size: 1rem;
+      margin: 10px 0;
+      background-color: #1c1f26;
+      color: #00ffe7;
+      border: 1px solid #00ffe7;
+      border-radius: 5px;
+    }
+    pre {
+      background: #111;
+      padding: 1rem;
+      border-radius: 5px;
+      white-space: pre-wrap;
+      border: 1px solid #00ffe7;
+    }
+    .btn-group {
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>🛡️ Security Checklist Generator</h1>
+  <label>Select Platform/Technology:</label><br>
+  <select id="platform">
+    <option value="">-- Select Platform --</option>
+    <option>Web</option>
+    <option>Mobile</option>
+    <option>APIs</option>
+    <option>Server</option>
+    <option>Kubernetes</option>
+    <option>CI/CD</option>
+    <option>Network</option>
+    <option>Container</option>
+  </select>
+
+  <div class="btn-group">
+    <button onclick="generate()">🔍 Generate</button>
+    <button onclick="copyToClipboard()">📋 Copy</button>
+    <button onclick="downloadExcel()">⬇️ Download Excel</button>
+  </div>
+
+  <h2>Test Cases</h2>
+  <pre id="results">Please select a platform to view security best practices.</pre>
+
+  <script>
+    const bestPractices = {
+"Web": [
+    "Use HTTPS and enforce HSTS policy",
+    "Set secure cookies with HttpOnly and Secure flags",
+    "Implement Content Security Policy (CSP)",
+    "Sanitize and validate all user inputs",
+    "Escape outputs for HTML, JS, URL contexts",
+    "Protect against Cross-Site Scripting (XSS)",
+    "Use CSRF tokens for state-changing requests",
+    "Limit login attempts to prevent brute-force",
+    "Do not expose stack traces in production",
+    "Disable directory indexing on web servers",
+    "Expire sessions after inactivity",
+    "Regenerate session ID after login",
+    "Avoid using eval() or document.write()",
+    "Apply security headers (X-Frame-Options, X-Content-Type-Options)",
+    "Disable autocomplete on password fields",
+    "Enable CAPTCHA on critical forms",
+    "Restrict admin access with IP filtering",
+    "Use Role-Based Access Control (RBAC)",
+    "Log all auth attempts and privilege escalations",
+    "Authenticate and rate-limit APIs",
+    "Validate uploaded file types and sizes",
+    "Avoid disclosing software versions",
+    "Use MFA for admin accounts",
+    "Hash passwords using bcrypt or Argon2",
+    "Keep dependencies up-to-date",
+    "Validate redirects to prevent open redirect",
+    "Ensure CORS is configured correctly",
+    "Scan app regularly using SAST tools",
+    "Implement logging and monitoring",
+    "Use security.txt for vulnerability disclosure",
+    "Avoid client-side secrets in JS files",
+    "Set SameSite flag on cookies",
+    "Prevent clickjacking with frame restrictions",
+    "Use TLS 1.2 or higher",
+    "Block TRACE and TRACK HTTP methods",
+    "Limit user enumeration via error messages",
+    "Check for insecure deserialization",
+    "Avoid hardcoded credentials in frontend",
+    "Restrict iframe embedding with CSP",
+    "Secure JWT tokens (expiry, signing)",
+    "Limit request sizes to prevent DoS",
+    "Implement rate limiting and throttling",
+    "Separate public and admin interfaces",
+    "Log input validation failures",
+    "Avoid inline scripts and styles",
+    "Purge secrets from repo history",
+    "Run regular vulnerability scans",
+    "Apply least privilege to application roles",
+    "Create separate test and production environments",
+    "Ensure adequate access control for every endpoint"],
+"Mobile": [
+"Use TLS 1.2+ for all network communication",
+    "Implement SSL certificate pinning",
+    "Securely store secrets (Keychain/Keystore)",
+    "Detect and block rooted/jailbroken devices",
+    "Do not store PII in plaintext",
+    "Use biometric auth with fallback",
+    "Encrypt local data storage",
+    "Validate backend SSL certificates",
+    "Limit permissions to essentials",
+    "Secure WebView configuration",
+    "Logout on inactivity or token expiry",
+    "Remove debug info before release",
+    "Avoid hardcoded keys or URLs",
+    "Apply secure IPC practices",
+    "Obfuscate code and resources",
+    "Verify integrity using checksum/signing",
+    "Prevent log leakage of sensitive data",
+    "Use secure PRNG (e.g., SecureRandom)",
+    "Re-authenticate before sensitive actions",
+    "Detect and block emulators",
+    "Avoid fallback to HTTP connections",
+    "Block screenshots on sensitive screens",
+    "Shorten session lifetimes",
+    "Disable exporting sensitive activities/services",
+    "Keep all SDKs and libs updated",
+    "Protect content providers with permissions",
+    "Restrict clipboard data leaks",
+    "Avoid static storage of API tokens",
+    "Enforce ATS on iOS apps",
+    "Validate runtime permissions flow",
+    "Clear sensitive data from memory on logout",
+    "Monitor app usage anomalies",
+    "Avoid storing PII in shared preferences",
+    "Configure secure storage for crash logs",
+    "Perform regular penetration testing",
+    "Enforce secure logout flow",
+    "Warn users on new login locations",
+    "Use encrypted SQLite (e.g., SQLCipher)",
+    "Follow OWASP MASVS guidelines",
+    "Avoid broadcast leaks",
+    "Implement runtime security checks",
+    "Check system integrity before sensitive actions",
+    "Validate deep link usage",
+    "Encrypt backups or disable backup flags",
+    "Authenticate all API calls",
+    "Use nonce-based or time-bound tokens",
+    "Implement layered defenses",
+    "Audit and control analytics SDK usage",
+    "Log and alert on high-risk behaviors"],
+"APIs": [
+"Require HTTPS for all endpoints",
+    "Validate input against strict schemas",
+    "Use access tokens (OAuth2, JWT)",
+    "Verify JWT tokens for issuer, expiry, signature",
+    "Do not use 'none' JWT algorithm",
+    "Limit token lifetime and scope",
+    "Enforce rate limiting and quotas",
+    "Avoid sending sensitive info in URLs",
+    "Log access and errors securely",
+    "Use consistent error responses (avoid stack traces)",
+    "Apply RBAC and scopes per endpoint",
+    "Avoid over-posting and under-posting",
+    "Restrict HTTP methods to expected ones",
+    "Filter response fields (data minimization)",
+    "Audit and rotate API keys regularly",
+    "Use strong authentication for APIs",
+    "Block repeated failed authentication attempts",
+    "Use request size and rate limits",
+    "Implement input and output sanitization",
+    "Avoid exposing debug endpoints",
+    "Protect against replay attacks with nonces",
+    "Enforce proper CORS policies",
+    "Encrypt tokens and secrets at rest",
+    "Version APIs using headers or URI (e.g., /v1/)",
+    "Validate Content-Type and Accept headers",
+    "Avoid internal error leakage in JSON/XML",
+    "Secure Webhooks with tokens/signatures",
+    "Use TLS 1.2+ for API traffic",
+    "Avoid generic catch-all 200 responses",
+    "Disable unused endpoints and routes",
+    "Log user-agent, IP, and timestamps",
+    "Perform security tests with tools like OWASP ZAP",
+    "Restrict large or malformed payloads",
+    "Implement JSON/XML schema validation",
+    "Rate-limit password reset and login APIs",
+    "Use paginated responses with limits",
+    "Rotate signing/encryption keys periodically",
+    "Avoid leaking system-level info (headers, IPs)",
+    "Prefer POST/PUT over GET for sensitive operations",
+    "Validate nested and array fields",
+    "Use deny-by-default API gateway rules",
+    "Perform API abuse detection",
+    "Secure backup copies of API config",
+    "Harden server and gateway infrastructure",
+    "Require signed requests for sensitive APIs",
+    "Disable directory browsing and auto-indexing",
+    "Enforce proper timeout values",
+    "Separate internal/external API access control",
+    "Encrypt cached API responses if needed"],
+"Server": [
+"Server security check #1",
+"Server security check #2",
+"Server security check #3",
+"Server security check #4",
+"Server security check #5",
+"Server security check #6",
+"Server security check #7",
+"Server security check #8",
+"Server security check #9",
+"Server security check #10",
+"Server security check #11",
+"Server security check #12",
+"Server security check #13",
+"Server security check #14",
+"Server security check #15",
+"Server security check #16",
+"Server security check #17",
+"Server security check #18",
+"Server security check #19",
+"Server security check #20",
+"Server security check #21",
+"Server security check #22",
+"Server security check #23",
+"Server security check #24",
+"Server security check #25",
+"Server security check #26",
+"Server security check #27",
+"Server security check #28",
+"Server security check #29",
+"Server security check #30",
+"Server security check #31",
+"Server security check #32",
+"Server security check #33",
+"Server security check #34",
+"Server security check #35",
+"Server security check #36",
+"Server security check #37",
+"Server security check #38",
+"Server security check #39",
+"Server security check #40",
+"Server security check #41",
+"Server security check #42",
+"Server security check #43",
+"Server security check #44",
+"Server security check #45",
+"Server security check #46",
+"Server security check #47",
+"Server security check #48",
+"Server security check #49",
+"Server security check #50"],
+"Kubernetes": [
+"Kubernetes security check #1",
+"Kubernetes security check #2",
+"Kubernetes security check #3",
+"Kubernetes security check #4",
+"Kubernetes security check #5",
+"Kubernetes security check #6",
+"Kubernetes security check #7",
+"Kubernetes security check #8",
+"Kubernetes security check #9",
+"Kubernetes security check #10",
+"Kubernetes security check #11",
+"Kubernetes security check #12",
+"Kubernetes security check #13",
+"Kubernetes security check #14",
+"Kubernetes security check #15",
+"Kubernetes security check #16",
+"Kubernetes security check #17",
+"Kubernetes security check #18",
+"Kubernetes security check #19",
+"Kubernetes security check #20",
+"Kubernetes security check #21",
+"Kubernetes security check #22",
+"Kubernetes security check #23",
+"Kubernetes security check #24",
+"Kubernetes security check #25",
+"Kubernetes security check #26",
+"Kubernetes security check #27",
+"Kubernetes security check #28",
+"Kubernetes security check #29",
+"Kubernetes security check #30",
+"Kubernetes security check #31",
+"Kubernetes security check #32",
+"Kubernetes security check #33",
+"Kubernetes security check #34",
+"Kubernetes security check #35",
+"Kubernetes security check #36",
+"Kubernetes security check #37",
+"Kubernetes security check #38",
+"Kubernetes security check #39",
+"Kubernetes security check #40",
+"Kubernetes security check #41",
+"Kubernetes security check #42",
+"Kubernetes security check #43",
+"Kubernetes security check #44",
+"Kubernetes security check #45",
+"Kubernetes security check #46",
+"Kubernetes security check #47",
+"Kubernetes security check #48",
+"Kubernetes security check #49",
+"Kubernetes security check #50"],
+"CI/CD": [
+"CI/CD security check #1",
+"CI/CD security check #2",
+"CI/CD security check #3",
+"CI/CD security check #4",
+"CI/CD security check #5",
+"CI/CD security check #6",
+"CI/CD security check #7",
+"CI/CD security check #8",
+"CI/CD security check #9",
+"CI/CD security check #10",
+"CI/CD security check #11",
+"CI/CD security check #12",
+"CI/CD security check #13",
+"CI/CD security check #14",
+"CI/CD security check #15",
+"CI/CD security check #16",
+"CI/CD security check #17",
+"CI/CD security check #18",
+"CI/CD security check #19",
+"CI/CD security check #20",
+"CI/CD security check #21",
+"CI/CD security check #22",
+"CI/CD security check #23",
+"CI/CD security check #24",
+"CI/CD security check #25",
+"CI/CD security check #26",
+"CI/CD security check #27",
+"CI/CD security check #28",
+"CI/CD security check #29",
+"CI/CD security check #30",
+"CI/CD security check #31",
+"CI/CD security check #32",
+"CI/CD security check #33",
+"CI/CD security check #34",
+"CI/CD security check #35",
+"CI/CD security check #36",
+"CI/CD security check #37",
+"CI/CD security check #38",
+"CI/CD security check #39",
+"CI/CD security check #40",
+"CI/CD security check #41",
+"CI/CD security check #42",
+"CI/CD security check #43",
+"CI/CD security check #44",
+"CI/CD security check #45",
+"CI/CD security check #46",
+"CI/CD security check #47",
+"CI/CD security check #48",
+"CI/CD security check #49",
+"CI/CD security check #50"],
+"Network": [
+"Network security check #1",
+"Network security check #2",
+"Network security check #3",
+"Network security check #4",
+"Network security check #5",
+"Network security check #6",
+"Network security check #7",
+"Network security check #8",
+"Network security check #9",
+"Network security check #10",
+"Network security check #11",
+"Network security check #12",
+"Network security check #13",
+"Network security check #14",
+"Network security check #15",
+"Network security check #16",
+"Network security check #17",
+"Network security check #18",
+"Network security check #19",
+"Network security check #20",
+"Network security check #21",
+"Network security check #22",
+"Network security check #23",
+"Network security check #24",
+"Network security check #25",
+"Network security check #26",
+"Network security check #27",
+"Network security check #28",
+"Network security check #29",
+"Network security check #30",
+"Network security check #31",
+"Network security check #32",
+"Network security check #33",
+"Network security check #34",
+"Network security check #35",
+"Network security check #36",
+"Network security check #37",
+"Network security check #38",
+"Network security check #39",
+"Network security check #40",
+"Network security check #41",
+"Network security check #42",
+"Network security check #43",
+"Network security check #44",
+"Network security check #45",
+"Network security check #46",
+"Network security check #47",
+"Network security check #48",
+"Network security check #49",
+"Network security check #50"],
+"Container": [
+"Container security check #1",
+"Container security check #2",
+"Container security check #3",
+"Container security check #4",
+"Container security check #5",
+"Container security check #6",
+"Container security check #7",
+"Container security check #8",
+"Container security check #9",
+"Container security check #10",
+"Container security check #11",
+"Container security check #12",
+"Container security check #13",
+"Container security check #14",
+"Container security check #15",
+"Container security check #16",
+"Container security check #17",
+"Container security check #18",
+"Container security check #19",
+"Container security check #20",
+"Container security check #21",
+"Container security check #22",
+"Container security check #23",
+"Container security check #24",
+"Container security check #25",
+"Container security check #26",
+"Container security check #27",
+"Container security check #28",
+"Container security check #29",
+"Container security check #30",
+"Container security check #31",
+"Container security check #32",
+"Container security check #33",
+"Container security check #34",
+"Container security check #35",
+"Container security check #36",
+"Container security check #37",
+"Container security check #38",
+"Container security check #39",
+"Container security check #40",
+"Container security check #41",
+"Container security check #42",
+"Container security check #43",
+"Container security check #44",
+"Container security check #45",
+"Container security check #46",
+"Container security check #47",
+"Container security check #48",
+"Container security check #49",
+"Container security check #50"],
+
+    };
+
+    function generate() {
+      const platform = document.getElementById('platform').value;
+      const output = document.getElementById('results');
+      if (!platform) {
+        output.textContent = "Please select a platform.";
+        return;
+      }
+      const cases = bestPractices[platform];
+      if (cases) {
+        output.textContent = cases.map((item, i) => `${i + 1}. ${item}`).join('\n');
+      } else {
+        output.textContent = "No test cases found for the selected platform.";
+      }
+    }
+
+    function copyToClipboard() {
+      const text = document.getElementById('results').textContent;
+      navigator.clipboard.writeText(text)
+        .then(() => alert("Copied to clipboard!"))
+        .catch(() => alert("Copy failed."));
+    }
+
+    function downloadExcel() {
+      const platform = document.getElementById('platform').value;
+      const cases = bestPractices[platform] || ["No test cases available"];
+      const ws_data = [["Platform", "Test Case"]];
+      cases.forEach(tc => ws_data.push([platform, tc]));
+      const wb = XLSX.utils.book_new();
+      const ws = XLSX.utils.aoa_to_sheet(ws_data);
+      XLSX.utils.book_append_sheet(wb, ws, "Security Test Cases");
+      XLSX.writeFile(wb, `SecurityTestCases_${platform}.xlsx`);
+    }
+  </script>
+</body>
+</html>
