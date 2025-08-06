@@ -1,4 +1,4 @@
-// 1DOM elements
+// DOM elements
 const platformSelect = document.getElementById('platform');
 const actionButtons = document.getElementById('action-buttons');
 const backToCategoriesBtn = document.getElementById('back-to-categories');
