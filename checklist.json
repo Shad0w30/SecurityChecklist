@@ -2,88 +2,88 @@
   "web": [
     {
       "name": "Authentication",
-      "reference": "https://owasp.org/www-project-top-ten/",
+//      "reference": "https://owasp.org/www-project-top-ten/",
       "controls": [
-        "Implement multi-factor authentication for all user accounts [mandatory]",
-        "Enforce strong password policies (min 12 chars, complexity) [mandatory]",
-        "Implement secure password recovery mechanisms [basic]",
-        "Use secure session management with expiration [basic]",
-        "Implement account lockout after multiple failed attempts [basic]",
-        "Use OAuth 2.0 or OpenID Connect for third-party auth [advanced]",
-        "Protect against credential stuffing attacks [advanced]",
-        "Implement biometric authentication securely [optional]",
-        "Use passwordless authentication where appropriate [optional]",
-        "Secure session tokens with HttpOnly and Secure flags [mandatory]"
+        "Implement multi-factor authentication for all user accounts []",
+        "Enforce strong password policies (min 12 chars, complexity) []",
+        "Implement secure password recovery mechanisms []",
+        "Use secure session management with expiration []",
+        "Implement account lockout after multiple failed attempts []",
+        "Use OAuth 2.0 or OpenID Connect for third-party auth []",
+        "Protect against credential stuffing attacks []",
+        "Implement biometric authentication securely []",
+        "Use passwordless authentication where appropriate []",
+        "Secure session tokens with HttpOnly and Secure flags []"
       ]
     },
     {
       "name": "Authorization",
-      "reference": "https://owasp.org/www-project-top-ten/",
+//      "reference": "https://owasp.org/www-project-top-ten/",
       "controls": [
-        "Implement least privilege principle for all roles [mandatory]",
-        "Use role-based access control (RBAC) [basic]",
-        "Implement attribute-based access control (ABAC) where needed [advanced]",
-        "Enforce access control checks on every request [mandatory]",
-        "Protect against IDOR (Insecure Direct Object Reference) [mandatory]",
-        "Implement proper admin interface security [basic]",
-        "Segregate duties for sensitive operations [advanced]",
-        "Implement time-based access restrictions [optional]",
-        "Enforce location-based access controls where appropriate [optional]",
-        "Implement proper access control for APIs [basic]"
+        "Implement least privilege principle for all roles []",
+        "Use role-based access control (RBAC) []",
+        "Implement attribute-based access control (ABAC) where needed []",
+        "Enforce access control checks on every request []",
+        "Protect against IDOR (Insecure Direct Object Reference) []",
+        "Implement proper admin interface security []",
+        "Segregate duties for sensitive operations []",
+        "Implement time-based access restrictions []",
+        "Enforce location-based access controls where appropriate []",
+        "Implement proper access control for APIs []"
       ]
     }
   ],
   "mobile": [
     {
       "name": "Data Storage",
-      "reference": "https://owasp.org/www-project-mobile-top-10/",
+//      "reference": "https://owasp.org/www-project-mobile-top-10/",
       "controls": [
-        "Use secure storage for sensitive data [mandatory]",
-        "Encrypt sensitive data at rest [mandatory]",
-        "Avoid storing sensitive data in plain text [basic]",
-        "Use Keychain (iOS) and Keystore (Android) [basic]",
-        "Implement secure file storage practices [basic]",
-        "Protect against insecure data storage [mandatory]",
-        "Use encrypted databases when needed [advanced]",
-        "Secure app-specific storage areas [basic]",
-        "Implement proper cache management [basic]",
-        "Clear sensitive data from memory after use [advanced]"
+        "Use secure storage for sensitive data []",
+        "Encrypt sensitive data at rest []",
+        "Avoid storing sensitive data in plain text []",
+        "Use Keychain (iOS) and Keystore (Android) []",
+        "Implement secure file storage practices []",
+        "Protect against insecure data storage []",
+        "Use encrypted databases when needed []",
+        "Secure app-specific storage areas []",
+        "Implement proper cache management []",
+        "Clear sensitive data from memory after use []"
       ]
     }
   ],
   "cloud": [
     {
       "name": "AWS Security",
-      "reference": "https://aws.amazon.com/security/",
+//      "reference": "https://aws.amazon.com/security/",
       "controls": [
-        "Implement IAM roles and policies with least privilege [mandatory]",
-        "Enable CloudTrail logging for all regions [mandatory]",
-        "Use AWS Config for resource tracking [basic]",
-        "Enable GuardDuty for threat detection [advanced]",
-        "Implement VPC security groups properly [basic]",
-        "Encrypt S3 buckets and enable versioning [mandatory]",
-        "Use AWS KMS for encryption key management [advanced]",
-        "Enable multi-factor authentication for root account [mandatory]",
-        "Implement security groups and NACLs properly [basic]",
-        "Regularly rotate access keys and credentials [basic]"
+        "Implement IAM roles and policies with least privilege []",
+        "Enable CloudTrail logging for all regions []",
+        "Use AWS Config for resource tracking []",
+        "Enable GuardDuty for threat detection []",
+        "Implement VPC security groups properly []",
+        "Encrypt S3 buckets and enable versioning []",
+        "Use AWS KMS for encryption key management []",
+        "Enable multi-factor authentication for root account []",
+        "Implement security groups and NACLs properly []",
+        "Regularly rotate access keys and credentials []"
       ]
     }
   ],
   "cert": [
     {
       "name": "CISSP",
-      "reference": "https://www.isc2.org/Certifications/CISSP",
+//      "reference": "https://www.isc2.org/Certifications/CISSP",
       "controls": [
-        "Security and Risk Management concepts [basic]",
-        "Asset Security classification and protection [basic]",
-        "Security Architecture and Engineering principles [advanced]",
-        "Communication and Network Security [basic]",
-        "Identity and Access Management controls [basic]",
-        "Security Assessment and Testing methodologies [advanced]",
-        "Security Operations best practices [basic]",
-        "Software Development Security principles [advanced]",
-        "Legal, regulations, and compliance requirements [basic]",
-        "Incident response and disaster recovery planning [basic]"
+        "Security and Risk Management concepts",
+        "Asset Security classification and protection",
+        "Security Architecture and Engineering principles []",
+        "Communication and Network Security",
+        "Identity and Access Management controls []",
+        "Security Assessment and Testing methodologies []",
+        "Security Operations best practices []",
+        "Software Development Security principles []",
+        "Legal, regulations, and compliance requirements []",
+        "Incident response and disaster recovery planning []"
       ]
     }
   ]
