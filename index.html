@@ -3,39 +3,38 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Security Checklist</title>
+  <title>Security Checklist Flashcards</title>
   <link rel="stylesheet" href="styles.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 </head>
 <body>
   <div class="container">
-    <h1>🛡️ Security Checklist</h1>
+    <header>
+      <h1>🔒 Security Checklist</h1>
+      <p class="subtitle">Interactive security best practices for developers and security professionals</p>
+    </header>
     
     <div class="controls">
-      <label for="platform">Select Platform/Technology:</label>
-      <select id="platform">
-        <option value="">-- Select Platform --</option>
-        <option value="Web">Web</option>
-        <option value="Mobile">Mobile</option>
-        <option value="APIs">APIs</option>
-        <option value="Server">Server</option>
-        <option value="Kubernetes">Kubernetes</option>
-        <option value="CI/CD">CI/CD</option>
-        <option value="Network">Network</option>
-        <option value="Container">Container</option>
-        <option value="Cloud">Cloud</option>
-      </select>
-
-      <div class="btn-group">
-        <button id="generate">🔍 Generate</button>
-        <button id="copy">📋 Copy</button>
-        <button id="download">⬇️ Download Excel</button>
+      <div class="tech-selector">
+        <label for="platform">Technology/Platform:</label>
+        <select id="platform">
+          <option value="">-- Select Technology --</option>
+          <option value="web">Web Application Security</option>
+          <option value="mobile">Mobile Security</option>
+          <option value="cloud">Cloud Security</option>
+          <option value="cert">Security Certifications</option>
+        </select>
+      </div>
+      
+      <div class="search-box">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="search" placeholder="Search categories...">
       </div>
     </div>
-
-    <div class="results-container">
-      <h2>Checklist</h2>
-      <pre id="results">Please select a platform to view security best practices.</pre>
+    
+    <div class="dashboard">
+      <div class="category-container" id="categories"></div>
+      <div class="controls-container" id="controls"></div>
     </div>
   </div>
 
