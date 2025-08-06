@@ -5,12 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Security Checklist</title>
   <link rel="stylesheet" href="styles.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 </head>
 <body>
   <div class="container">
     <header>
       <h1>🔒 Security Checklist</h1>
-      <p class="subtitle">Security Best Practices for developers and security professionals</p>
+      <p class="subtitle">Security Best Practices for Developers & Security Professionals</p>
     </header>
     
     <div class="controls">
@@ -29,12 +30,20 @@
           <option value="cert">Security Certifications</option>
         </select>
       </div>
+      
+      <div id="category-selector" class="hidden">
+        <label for="category">Category:</label>
+        <select id="category"></select>
+      </div>
+      
+      <div class="btn-group hidden" id="action-buttons">
+        <button id="back-to-categories">← Back to Categories</button>
+        <button id="copy-checklist">📋 Copy Checklist</button>
+        <button id="download-excel">⬇️ Download Excel</button>
+      </div>
     </div>
     
-    <div class="flashcard-view">
-      <div id="category-view"></div>
-      <div id="controls-view"></div>
-    </div>
+    <div id="flashcards-container"></div>
   </div>
 
   <script src="script.js"></script>
