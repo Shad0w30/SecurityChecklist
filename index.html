@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Security Checklist Flashcards</title>
   <link rel="stylesheet" href="styles.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 </head>
 <body>
   <div class="container">
@@ -25,16 +24,11 @@
           <option value="cert">Security Certifications</option>
         </select>
       </div>
-      
-      <div class="search-box">
-        <span class="search-icon">🔍</span>
-        <input type="text" id="search" placeholder="Search categories...">
-      </div>
     </div>
     
-    <div class="dashboard">
-      <div class="category-container" id="categories"></div>
-      <div class="controls-container" id="controls"></div>
+    <div class="flashcard-view">
+      <div id="category-view"></div>
+      <div id="controls-view"></div>
     </div>
   </div>
 
