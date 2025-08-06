@@ -4,10 +4,10 @@
       "name": "Authentication",
       "reference": "https://owasp.org/www-project-top-ten/",
       "controls": [
-        "Implement multi-factor authentication for all user accounts",
+        "Use HTTPS everywhere",
         "Enforce strong password policies (min 12 chars, complexity)",
-        "Implement secure password recovery mechanisms",
-        "Use secure session management with expiration",
+        "Store password hashes using Bcrypt (no salt necessary - Bcrypt does it for you)",
+        "Destroy the session identifier after logout",
         "Implement account lockout after multiple failed attempts",
         "Use OAuth 2.0 or OpenID Connect for third-party auth",
         "Protect against credential stuffing attacks",
