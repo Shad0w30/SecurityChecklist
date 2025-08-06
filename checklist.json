@@ -1,8 +1,10 @@
 {
   "web": [
     {
+       "reference": "https://owasp.org",
+    },
+    {
       "name": "Authentication",
-//      "reference": "https://owasp.org/www-project-top-ten/",
       "controls": [
         "Implement multi-factor authentication for all user accounts []",
         "Enforce strong password policies (min 12 chars, complexity) []",
@@ -18,7 +20,6 @@
     },
     {
       "name": "Authorization",
-//      "reference": "https://owasp.org/www-project-top-ten/",
       "controls": [
         "Implement least privilege principle for all roles []",
         "Use role-based access control (RBAC) []",
@@ -36,7 +37,6 @@
   "mobile": [
     {
       "name": "Data Storage",
-//      "reference": "https://owasp.org/www-project-mobile-top-10/",
       "controls": [
         "Use secure storage for sensitive data []",
         "Encrypt sensitive data at rest []",
@@ -54,7 +54,6 @@
   "cloud": [
     {
       "name": "AWS Security",
-//      "reference": "https://aws.amazon.com/security/",
       "controls": [
         "Implement IAM roles and policies with least privilege []",
         "Enable CloudTrail logging for all regions []",
@@ -72,7 +71,6 @@
   "cert": [
     {
       "name": "CISSP",
-//      "reference": "https://www.isc2.org/Certifications/CISSP",
       "controls": [
         "Security and Risk Management concepts",
         "Asset Security classification and protection",
