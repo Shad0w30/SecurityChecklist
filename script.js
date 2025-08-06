@@ -73,17 +73,17 @@ function showCategoryControls(category) {
 function renderControls(controls) {
   controlsView.innerHTML = '';
   
-//  if (currentCategory) {
-//    const backButton = document.createElement('div');
-//    backButton.className = 'back-button';
+  if (currentCategory) {
+    const backButton = document.createElement('div');
+    backButton.className = 'back-button';
 //    backButton.textContent = '← Back to categories';
-//    backButton.addEventListener('click', () => {
-//      currentCategory = null;
-//      const categories = checklistData[currentTech] || [];
-//      renderCategories(categories);
-//      renderControls([]);
-//    });
-//    controlsView.appendChild(backButton);
+    backButton.addEventListener('click', () => {
+      currentCategory = null;
+      const categories = checklistData[currentTech] || [];
+      renderCategories(categories);
+      renderControls([]);
+    });
+    controlsView.appendChild(backButton);
     
     const title = document.createElement('h2');
     title.className = 'category-title';
