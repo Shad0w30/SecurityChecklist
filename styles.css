@@ -68,7 +68,7 @@ h1 {
   margin-bottom: var(--spacing-xl);
 }
 
-.tech-selector, .category-selector {
+.tech-selector {
   margin-bottom: var(--spacing-md);
 }
 
@@ -95,6 +95,7 @@ select {
   display: flex;
   gap: var(--spacing-md);
   flex-wrap: wrap;
+  margin-top: var(--spacing-md);
 }
 
 button {
@@ -161,12 +162,37 @@ button:active {
   position: relative;
 }
 
-.flashcard .index {
+.flashcard .count {
+  background-color: rgba(255,255,255,0.2);
+  padding: 0.2rem 0.5rem;
+  border-radius: 1rem;
+  font-size: 0.8rem;
+  float: right;
+}
+
+.flashcard p {
+  opacity: 0.9;
+  font-size: 0.9rem;
+  position: relative;
+}
+
+/* Control item styles */
+.control-item {
+  background-color: var(--white);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md);
+  margin-bottom: var(--spacing-sm);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  border-left: 4px solid var(--primary-red);
+}
+
+.control-item .index {
+  color: var(--primary-purple);
   font-weight: bold;
   margin-right: var(--spacing-sm);
 }
 
-.flashcard .tag {
+.control-item .tag {
   display: inline-block;
   padding: 0.2rem 0.5rem;
   border-radius: 1rem;
