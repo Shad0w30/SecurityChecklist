@@ -1,4 +1,5 @@
-// DOM elements
+#HELLO// DOM elements
+Hellow
 const platformSelect = document.getElementById('platform');
 const actionButtons = document.getElementById('action-buttons');
 const backToCategoriesBtn = document.getElementById('back-to-categories');
