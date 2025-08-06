@@ -47,7 +47,7 @@ function renderCategories(categories) {
   categoryView.innerHTML = '';
   
   if (!categories.length) {
-    categoryView.innerHTML = '<p>No categories available</p>';
+    categoryView.innerHTML = '<p>Loading...</p>';
     return;
   }
   
@@ -76,7 +76,7 @@ function renderControls(controls) {
   if (currentCategory) {
     const backButton = document.createElement('div');
     backButton.className = 'back-button';
-    backButton.textContent = '← Back to categories';
+//    backButton.textContent = '← Back to categories';
     backButton.addEventListener('click', () => {
       currentCategory = null;
       const categories = checklistData[currentTech] || [];
@@ -102,7 +102,7 @@ function renderControls(controls) {
   
   if (!controls.length) {
     if (!currentCategory) {
-      controlsView.innerHTML = '<p>Select a category to view controls</p>';
+      controlsView.innerHTML = '<p>Select a category</p>';
     }
     return;
   }
