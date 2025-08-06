@@ -1,5 +1,6 @@
 {
   "Web": [
+    "Use HTTPS and enforce HSTS policy",
     "Set secure cookies with HttpOnly and Secure flags",
     "Implement Content Security Policy (CSP)",
     "Sanitize and validate all user inputs",
