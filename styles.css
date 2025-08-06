@@ -1,59 +1,171 @@
-/* Add these new styles to your existing CSS */
+:root {
+  /* Color scheme */
+  --primary-color: #4361ee;
+  --secondary-color: #3a0ca3;
+  --accent-color: #f72585;
+  --light-color: #f8f9fa;
+  --dark-color: #212529;
+  --success-color: #4cc9f0;
+  
+  /* Spacing */
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  
+  /* Border radius */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+}
 
-/* Control card styles */
-.control-card {
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+  background-color: var(--light-color);
+  color: var(--dark-color);
+  padding: var(--spacing-xl);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+header {
+  text-align: center;
+  margin-bottom: var(--spacing-xl);
+}
+
+h1 {
+  color: var(--primary-color);
+  margin-bottom: var(--spacing-sm);
+}
+
+.subtitle {
+  color: var(--secondary-color);
+  font-size: 1.1rem;
+}
+
+.controls {
+  background-color: white;
+  padding: var(--spacing-lg);
+  border-radius: var(--radius-md);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  margin-bottom: var(--spacing-xl);
+}
+
+.tech-selector {
+  margin-bottom: var(--spacing-md);
+}
+
+label {
+  display: block;
+  margin-bottom: var(--spacing-sm);
+  font-weight: 600;
+  color: var(--primary-color);
+}
+
+select, input {
+  width: 100%;
+  padding: var(--spacing-sm);
+  border: 1px solid #ddd;
+  border-radius: var(--radius-sm);
+  font-size: 1rem;
+}
+
+.search-box {
+  position: relative;
+}
+
+.search-icon {
+  position: absolute;
+  left: var(--spacing-sm);
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--secondary-color);
+}
+
+.search-box input {
+  padding-left: 2rem;
+}
+
+.dashboard {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: var(--spacing-lg);
+}
+
+.category-container, .controls-container {
   background-color: white;
   border-radius: var(--radius-md);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  padding: var(--spacing-lg);
+  min-height: 500px;
+}
+
+/* Flashcard styles */
+.flashcard {
+  background: linear-gradient(135deg, var(--primary-color), var(--success-color));
+  color: white;
+  border-radius: var(--radius-md);
+  padding: var(--spacing-lg);
+  margin-bottom: var(--spacing-md);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.flashcard:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+
+.flashcard h3 {
+  margin-bottom: var(--spacing-sm);
+}
+
+.flashcard .count {
+  background-color: rgba(255,255,255,0.2);
+  padding: 0.2rem 0.5rem;
+  border-radius: 1rem;
+  font-size: 0.8rem;
+}
+
+.control-item {
+  background-color: white;
+  border-radius: var(--radius-sm);
   padding: var(--spacing-md);
   margin-bottom: var(--spacing-sm);
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-left: 4px solid var(--primary-blue);
+  border-left: 4px solid var(--accent-color);
 }
 
-.control-content {
-  flex: 1;
+.control-item .index {
+  color: var(--secondary-color);
+  font-weight: bold;
+  margin-right: var(--spacing-sm);
 }
 
-/* Back button styles */
 .back-button {
   display: inline-block;
-  margin-bottom: var(--spacing-lg);
-  color: var(--primary-blue);
+  margin-bottom: var(--spacing-md);
+  color: var(--primary-color);
   cursor: pointer;
   font-weight: bold;
-  padding: var(--spacing-sm);
-  background-color: var(--white);
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--primary-blue);
 }
 
-.back-button:hover {
-  background-color: var(--primary-blue);
-  color: white;
-}
-
-/* Category title styles */
-.category-title {
-  color: var(--primary-purple);
-  margin-bottom: var(--spacing-md);
-  text-align: left;
-  font-size: 1.5rem;
-  border-bottom: 2px solid var(--primary-green);
-  padding-bottom: var(--spacing-sm);
-}
-
-/* Reference link styles */
-.reference-link {
-  display: inline-block;
-  margin-bottom: var(--spacing-lg);
-  color: var(--primary-blue);
-  text-decoration: none;
-  padding: var(--spacing-sm) 0;
-}
-
-.reference-link:hover {
-  text-decoration: underline;
+@media (max-width: 768px) {
+  .dashboard {
+    grid-template-columns: 1fr;
+  }
+  
+  body {
+    padding: var(--spacing-md);
+  }
 }
