@@ -123,11 +123,11 @@ button:active {
 }
 
 #copy-checklist {
-  background-color: var(--primary-purple);
+  background-color: var(--primary-grey);
 }
 
 #download-excel {
-  background-color: var(--primary-red);
+  background-color: var(--primary-green);
 }
 
 /* Flashcard styles */
