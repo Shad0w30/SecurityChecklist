@@ -1,11 +1,12 @@
 :root {
   /* Color scheme */
-  --primary-color: #4361ee;
-  --secondary-color: #3a0ca3;
-  --accent-color: #f72585;
+  --primary-blue: #4361ee;
+  --primary-purple: #7209b7;
+  --primary-red: #f72585;
+  --primary-green: #4cc9f0;
   --light-color: #f8f9fa;
   --dark-color: #212529;
-  --success-color: #4cc9f0;
+  --white: #ffffff;
   
   /* Spacing */
   --spacing-sm: 0.5rem;
@@ -44,17 +45,17 @@ header {
 }
 
 h1 {
-  color: var(--primary-color);
+  color: var(--primary-blue);
   margin-bottom: var(--spacing-sm);
 }
 
 .subtitle {
-  color: var(--secondary-color);
+  color: var(--primary-purple);
   font-size: 1.1rem;
 }
 
 .controls {
-  background-color: white;
+  background-color: var(--white);
   padding: var(--spacing-lg);
   border-radius: var(--radius-md);
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
@@ -69,10 +70,10 @@ label {
   display: block;
   margin-bottom: var(--spacing-sm);
   font-weight: 600;
-  color: var(--primary-color);
+  color: var(--primary-blue);
 }
 
-select, input {
+select {
   width: 100%;
   padding: var(--spacing-sm);
   border: 1px solid #ddd;
@@ -80,55 +81,49 @@ select, input {
   font-size: 1rem;
 }
 
-.search-box {
-  position: relative;
-}
-
-.search-icon {
-  position: absolute;
-  left: var(--spacing-sm);
-  top: 50%;
-  transform: translateY(-50%);
-  color: var(--secondary-color);
-}
-
-.search-box input {
-  padding-left: 2rem;
-}
-
-.dashboard {
+.flashcard-view {
   display: grid;
-  grid-template-columns: 1fr 2fr;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: var(--spacing-lg);
-}
-
-.category-container, .controls-container {
-  background-color: white;
-  border-radius: var(--radius-md);
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  padding: var(--spacing-lg);
-  min-height: 500px;
 }
 
 /* Flashcard styles */
 .flashcard {
-  background: linear-gradient(135deg, var(--primary-color), var(--success-color));
-  color: white;
+  background: linear-gradient(135deg, var(--primary-blue), var(--primary-green));
+  color: var(--white);
   border-radius: var(--radius-md);
   padding: var(--spacing-lg);
-  margin-bottom: var(--spacing-md);
   cursor: pointer;
   transition: all 0.3s ease;
   box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  margin-bottom: var(--spacing-md);
+  position: relative;
+  overflow: hidden;
+}
+
+.flashcard::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    to bottom right,
+    rgba(255,255,255,0.3) 0%,
+    rgba(255,255,255,0) 60%
+  );
+  transform: rotate(30deg);
 }
 
 .flashcard:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+  transform: translateY(-5px);
+  box-shadow: 0 8px 15px rgba(0,0,0,0.2);
 }
 
 .flashcard h3 {
   margin-bottom: var(--spacing-sm);
+  position: relative;
 }
 
 .flashcard .count {
@@ -136,18 +131,27 @@ select, input {
   padding: 0.2rem 0.5rem;
   border-radius: 1rem;
   font-size: 0.8rem;
+  float: right;
 }
 
+.flashcard p {
+  opacity: 0.9;
+  font-size: 0.9rem;
+  position: relative;
+}
+
+/* Control item styles */
 .control-item {
-  background-color: white;
-  border-radius: var(--radius-sm);
+  background-color: var(--white);
+  border-radius: var(--radius-md);
   padding: var(--spacing-md);
   margin-bottom: var(--spacing-sm);
-  border-left: 4px solid var(--accent-color);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  border-left: 4px solid var(--primary-red);
 }
 
 .control-item .index {
-  color: var(--secondary-color);
+  color: var(--primary-purple);
   font-weight: bold;
   margin-right: var(--spacing-sm);
 }
@@ -155,17 +159,36 @@ select, input {
 .back-button {
   display: inline-block;
   margin-bottom: var(--spacing-md);
-  color: var(--primary-color);
+  color: var(--primary-blue);
   cursor: pointer;
   font-weight: bold;
+  padding: var(--spacing-sm);
+  background-color: var(--white);
+  border-radius: var(--radius-sm);
+}
+
+.category-title {
+  color: var(--primary-purple);
+  margin-bottom: var(--spacing-md);
+}
+
+.reference-link {
+  display: block;
+  margin-bottom: var(--spacing-lg);
+  color: var(--primary-blue);
+  text-decoration: none;
+}
+
+.reference-link:hover {
+  text-decoration: underline;
 }
 
 @media (max-width: 768px) {
-  .dashboard {
-    grid-template-columns: 1fr;
-  }
-  
   body {
     padding: var(--spacing-md);
+  }
+  
+  .flashcard-view {
+    grid-template-columns: 1fr;
   }
 }
