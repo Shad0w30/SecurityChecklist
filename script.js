@@ -99,14 +99,7 @@ function renderControls(controls) {
       controlsView.appendChild(reference);
     }
   }
-  
-  if (!controls.length) {
-    if (!currentCategory) {
-      controlsView.innerHTML = '<p>Select a category</p>';
-    }
-    return;
-  }
-  
+    
   controls.forEach((control, index) => {
     const controlItem = document.createElement('div');
     controlItem.className = 'control-item';
