@@ -1,7 +1,5 @@
 // DOM elements
 const platformSelect = document.getElementById('platform');
-const categorySelector = document.getElementById('category-selector');
-const categorySelect = document.getElementById('category');
 const actionButtons = document.getElementById('action-buttons');
 const backToCategoriesBtn = document.getElementById('back-to-categories');
 const copyChecklistBtn = document.getElementById('copy-checklist');
@@ -28,7 +26,6 @@ async function init() {
 
   // Set up event listeners
   platformSelect.addEventListener('change', handlePlatformChange);
-  categorySelect.addEventListener('change', handleCategoryChange);
   backToCategoriesBtn.addEventListener('click', showCategories);
   copyChecklistBtn.addEventListener('click', copyChecklist);
   downloadExcelBtn.addEventListener('click', downloadExcel);
@@ -40,58 +37,61 @@ function handlePlatformChange() {
   currentCategory = null;
   
   if (!currentTech) {
-    categorySelector.classList.add('hidden');
     actionButtons.classList.add('hidden');
     flashcardsContainer.innerHTML = '';
     return;
   }
   
-  // Show category selector
-  categorySelector.classList.remove('hidden');
+  // Show action buttons
+  actionButtons.classList.remove('hidden');
   
-  // Populate categories
-  categorySelect.innerHTML = '<option value="">-- Select Category --</option>';
-  const categories = checklistData[currentTech] || [];
-  categories.forEach(category => {
-    const option = document.createElement('option');
-    option.value = category.name;
-    option.textContent = category.name;
-    categorySelect.appendChild(option);
-  });
-  
-  // Hide action buttons until category is selected
-  actionButtons.classList.add('hidden');
-  flashcardsContainer.innerHTML = '';
-}
-
-// Handle category selection
-function handleCategoryChange() {
-  const categoryName = categorySelect.value;
-  
-  if (!categoryName) {
-    actionButtons.classList.add('hidden');
-    flashcardsContainer.innerHTML = '';
-    return;
-  }
-  
-  // Find the selected category
-  const categories = checklistData[currentTech] || [];
-  currentCategory = categories.find(cat => cat.name === categoryName);
-  
-  if (currentCategory) {
-    // Show action buttons
-    actionButtons.classList.remove('hidden');
-    // Render controls
-    renderControls();
-  }
+  // Render categories
+  renderCategories();
 }
 
 // Show categories view
 function showCategories() {
   currentCategory = null;
-  categorySelect.value = '';
-  actionButtons.classList.add('hidden');
+  renderCategories();
+}
+
+// Render categories as flashcards
+function renderCategories() {
   flashcardsContainer.innerHTML = '';
+  
+  if (currentCategory) {
+    // Render controls for the selected category
+    renderControls();
+    return;
+  }
+  
+  const categories = checklistData[currentTech] || [];
+  
+  if (!categories.length) {
+    flashcardsContainer.innerHTML = '<p>No categories available for this platform</p>';
+    return;
+  }
+  
+  // Add title
+  const title = document.createElement('h2');
+  title.className = 'category-title';
+  title.textContent = `${currentTech.toUpperCase()} Categories`;
+  flashcardsContainer.appendChild(title);
+  
+  // Create flashcards for each category
+  categories.forEach(category => {
+    const flashcard = document.createElement('div');
+    flashcard.className = 'flashcard';
+    flashcard.innerHTML = `
+      <h3>${category.name} <span class="count">${category.controls.length}</span></h3>
+      <p>Click to view controls</p>
+    `;
+    flashcard.addEventListener('click', () => {
+      currentCategory = category;
+      renderControls();
+    });
+    flashcardsContainer.appendChild(flashcard);
+  });
 }
 
 // Render controls as flashcards
@@ -100,10 +100,10 @@ function renderControls() {
   
   flashcardsContainer.innerHTML = '';
   
-  // Add category title
+  // Add title
   const title = document.createElement('h2');
   title.className = 'category-title';
-  title.textContent = currentCategory.name;
+  title.textContent = `${currentTech.toUpperCase()} - ${currentCategory.name}`;
   flashcardsContainer.appendChild(title);
   
   // Add reference link if available
@@ -119,7 +119,7 @@ function renderControls() {
   // Create flashcards for each control
   currentCategory.controls.forEach((control, index) => {
     const flashcard = document.createElement('div');
-    flashcard.className = 'flashcard';
+    flashcard.className = 'control-item';
     
     // Extract tag if present (format: "Control text [tag]")
     let controlText = control;
@@ -140,13 +140,20 @@ function renderControls() {
 
 // Copy checklist to clipboard
 function copyChecklist() {
-  if (!currentCategory) return;
+  let checklistText = '';
   
-  let checklistText = `${currentTech.toUpperCase()} - ${currentCategory.name}\n\n`;
-  
-  currentCategory.controls.forEach((control, index) => {
-    checklistText += `${index + 1}. ${control}\n`;
-  });
+  if (currentCategory) {
+    checklistText = `${currentTech.toUpperCase()} - ${currentCategory.name}\n\n`;
+    currentCategory.controls.forEach((control, index) => {
+      checklistText += `${index + 1}. ${control}\n`;
+    });
+  } else {
+    const categories = checklistData[currentTech] || [];
+    checklistText = `${currentTech.toUpperCase()} Categories\n\n`;
+    categories.forEach(category => {
+      checklistText += `${category.name} (${category.controls.length} controls)\n`;
+    });
+  }
   
   navigator.clipboard.writeText(checklistText)
     .then(() => {
@@ -160,29 +167,60 @@ function copyChecklist() {
 
 // Download checklist as Excel
 function downloadExcel() {
-  if (!currentTech || !currentCategory) return;
+  if (!currentTech) return;
   
   // Prepare worksheet data
-  const ws_data = [
-    ["Platform", "Category", "Control", "Type"],
-    ...currentCategory.controls.map(control => {
-      // Extract tag if present
-      let controlText = control;
-      let controlType = '';
-      const tagMatch = control.match(/\[(mandatory|optional|basic|advanced)\]/i);
-      if (tagMatch) {
-        controlType = tagMatch[1].toLowerCase();
-        controlText = control.replace(tagMatch[0], '').trim();
-      }
-      
-      return [
-        currentTech.toUpperCase(),
-        currentCategory.name,
-        controlText,
-        controlType || 'N/A'
-      ];
-    })
-  ];
+  let ws_data = [];
+  
+  if (currentCategory) {
+    // Export single category
+    ws_data = [
+      ["Platform", "Category", "Control", "Type"],
+      ...currentCategory.controls.map(control => {
+        // Extract tag if present
+        let controlText = control;
+        let controlType = '';
+        const tagMatch = control.match(/\[(mandatory|optional|basic|advanced)\]/i);
+        if (tagMatch) {
+          controlType = tagMatch[1].toLowerCase();
+          controlText = control.replace(tagMatch[0], '').trim();
+        }
+        
+        return [
+          currentTech.toUpperCase(),
+          currentCategory.name,
+          controlText,
+          controlType || 'N/A'
+        ];
+      })
+    ];
+  } else {
+    // Export all categories for the platform
+    const categories = checklistData[currentTech] || [];
+    ws_data = [
+      ["Platform", "Category", "Control", "Type"]
+    ];
+    
+    categories.forEach(category => {
+      category.controls.forEach(control => {
+        // Extract tag if present
+        let controlText = control;
+        let controlType = '';
+        const tagMatch = control.match(/\[(mandatory|optional|basic|advanced)\]/i);
+        if (tagMatch) {
+          controlType = tagMatch[1].toLowerCase();
+          controlText = control.replace(tagMatch[0], '').trim();
+        }
+        
+        ws_data.push([
+          currentTech.toUpperCase(),
+          category.name,
+          controlText,
+          controlType || 'N/A'
+        ]);
+      });
+    });
+  }
   
   // Create workbook
   const wb = XLSX.utils.book_new();
@@ -200,7 +238,11 @@ function downloadExcel() {
   XLSX.utils.book_append_sheet(wb, ws, "Security Checklist");
   
   // Generate filename
-  const filename = `SecurityChecklist_${currentTech}_${currentCategory.name.replace(/[^a-z0-9]/gi, '_')}.xlsx`;
+  let filename = `SecurityChecklist_${currentTech}`;
+  if (currentCategory) {
+    filename += `_${currentCategory.name.replace(/[^a-z0-9]/gi, '_')}`;
+  }
+  filename += '.xlsx';
   
   // Download the file
   XLSX.writeFile(wb, filename);
