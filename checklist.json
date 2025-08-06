@@ -2,7 +2,6 @@
   "web": [
     {
       "name": "Authentication",
-      "reference": "https://owasp.org/www-project-top-ten/",
       "controls": [
         "Implement multi-factor authentication for all user accounts",
         "Enforce strong password policies (min 12 chars, complexity)",
@@ -18,7 +17,6 @@
     },
     {
       "name": "Authorization",
-      "reference": "https://owasp.org/www-project-top-ten/",
       "controls": [
         "Implement least privilege principle for all roles",
         "Use role-based access control (RBAC)",
@@ -34,7 +32,6 @@
     },
     {
       "name": "Input Validation",
-      "reference": "https://owasp.org/www-project-top-ten/",
       "controls": [
         "Validate all user inputs on server side",
         "Implement allow-list validation approach",
@@ -52,7 +49,6 @@
   "mobile": [
     {
       "name": "Data Storage",
-      "reference": "https://owasp.org/www-project-mobile-top-10/",
       "controls": [
         "Use secure storage for sensitive data",
         "Encrypt sensitive data at rest",
@@ -68,7 +64,6 @@
     },
     {
       "name": "Authentication",
-      "reference": "https://owasp.org/www-project-mobile-top-10/",
       "controls": [
         "Implement biometric authentication securely",
         "Use secure token storage",
@@ -83,7 +78,6 @@
   "cloud": [
     {
       "name": "AWS Security",
-      "reference": "https://aws.amazon.com/security/",
       "controls": [
         "Implement IAM roles and policies with least privilege",
         "Enable CloudTrail logging for all regions",
@@ -99,7 +93,6 @@
     },
     {
       "name": "Azure Security",
-      "reference": "https://azure.microsoft.com/en-us/services/security-center/",
       "controls": [
         "Implement Azure AD with conditional access",
         "Use Azure Security Center for monitoring",
@@ -115,7 +108,6 @@
     },
     {
       "name": "GCP Security",
-      "reference": "https://cloud.google.com/security",
       "controls": [
         "Implement Cloud Identity and Access Management",
         "Use VPC Service Controls for data isolation",
@@ -133,7 +125,6 @@
   "cert": [
     {
       "name": "CISSP",
-      "reference": "https://www.isc2.org/Certifications/CISSP",
       "controls": [
         "Security and Risk Management concepts",
         "Asset Security classification and protection",
@@ -149,7 +140,6 @@
     },
     {
       "name": "CISM",
-      "reference": "https://www.isaca.org/credentialing/cism",
       "controls": [
         "Information Security Governance framework",
         "Information Risk Management practices",
@@ -165,7 +155,6 @@
     },
     {
       "name": "CCSP",
-      "reference": "https://www.isc2.org/Certifications/CCSP",
       "controls": [
         "Cloud Concepts, Architecture and Design",
         "Cloud Data Security principles",
