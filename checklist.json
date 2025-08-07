@@ -3,16 +3,19 @@
     {
       "name": "Authentication",
       "controls": [
-        "Implement multi-factor authentication for all user accounts",
-        "Enforce strong password policies (min 12 chars, complexity)",
-        "Implement secure password recovery mechanisms",
-        "Use secure session management with expiration",
-        "Implement account lockout after multiple failed attempts",
-        "Use OAuth 2.0 or OpenID Connect for third-party auth",
-        "Protect against credential stuffing attacks",
-        "Implement biometric authentication securely",
-        "Use passwordless authentication where appropriate",
-        "Secure session tokens with HttpOnly and Secure flags"
+        "Use HTTPS everywhere."
+        "Store password hashes using Bcrypt (no salt necessary - Bcrypt does it for you)."
+        "Destroy the session identifier after logout."
+        "Destroy all active sessions on reset password (or offer to)."
+        "Must have the state parameter in OAuth2."
+        "No open redirects after successful login or in any other intermediate redirects."
+        "When parsing Signup/Login input, sanitize for javascript://, data://, CRLF characters."
+        "Set secure, httpOnly cookies."
+        "In Mobile OTP based mobile verification, do not send the OTP back in the response when generate OTP or Resend OTP API is called."
+        "Limit attempts to Login, Verify OTP, Resend OTP and generate OTP APIs for a particular user. Have an exponential backoff set or/and something like a captcha based challenge."
+        "Check for randomness of reset password token in the emailed link or SMS."
+        "Set an expiration on the reset password token for a reasonable period."
+        "Expire the reset token after it has been successfully used."
       ]
     },
     {
@@ -28,6 +31,13 @@
         "Implement time-based access restrictions",
         "Enforce location-based access controls where appropriate",
         "Implement proper access control for APIs"
+        "Any resource access like, my cart, my history should check the logged in user's ownership of the resource using session id."
+        "Serially iterable resource id should be avoided. Use /me/orders instead of /user/37153/orders. This acts as a sanity check in case you forgot to check for authorization token."
+        "Edit email/phone number feature should be accompanied by a verification email to the owner of the account."
+        "Any upload feature should sanitize the filename provided by the user. Also, for generally reasons apart from security, upload to something like S3 (and post-process using lambda) and not your own server capable of executing code."
+        "Profile photo upload feature should sanitize all the EXIF tags also if not required."
+        "For user ids and other ids, use RFC compliant UUID instead of integers. You can find an implementation for this for your language on Github."
+        "JWT are awesome. Use them if required for your single page app/APIs."
       ]
     },
     {
@@ -43,6 +53,46 @@
         "Protect against SQL injection attacks",
         "Prevent cross-site scripting (XSS) vulnerabilities",
         "Protect against command injection attacks"
+        "Sanitize all user inputs or any input parameters exposed to user to prevent XSS."
+        "Always use parameterized queries to prevent SQL Injection."
+        "Sanitize user input if using it directly for functionalities like CSV import."
+        "Sanitize user input for special cases like robots.txt as profile names in case you are using a url pattern like coolcorp.io/username."
+        "Do not hand code or build JSON by string concatenation ever, no matter how small the object is. Use your language defined libraries or framework."
+        "Sanitize inputs that take some sort of URLs to prevent SSRF."
+        "Sanitize Outputs before displaying to users."
+      ]
+    }
+    {
+      "name": "Datebase",
+      "controls": [
+        "Use encryption for data identifying users and sensitive data like access tokens, email addresses or billing details."
+        "If your database supports low cost encryption at rest (like AWS Aurora), then enable that to secure data on disk. Make sure all backups are stored encrypted as well."
+        "Use minimal privilege for the database access user account. Don’t use the database root account."
+        "Store and distribute secrets using a key store designed for the purpose. Don’t hard code in your applications."
+        "Fully prevent SQL injection by only using SQL prepared statements. For example: if using NPM, don’t use npm-mysql, use npm-mysql2 which supports prepared statements."
+      ]
+    }
+    {
+      "name": "Security Headers & Configuration",
+      "controls": [
+        "Add CSP header to mitigate XSS and data injection attacks. This is important."
+        "Add CSRF header to prevent cross site request forgery. Also add SameSite attributes on cookies."
+        "Add HSTS header to prevent SSL stripping attack."
+        "Add your domain to the HSTS Preload List"
+        "Add X-Frame-Options to protect against Clickjacking."
+        "Add X-XSS-Protection header to mitigate XSS attacks."
+        "Update DNS records to add SPF record to mitigate spam and phishing attacks."
+        "Add subresource integrity checks if loading your JavaScript libraries from a third party CDN. For extra security, add the require-sri-for CSP-directive so you don't load resources that don't have an SRI sat."
+        "Use random CSRF tokens and expose business logic APIs as HTTP POST requests. Do not expose CSRF tokens over HTTP for example in an initial request upgrade phase."
+        "Do not use critical data or tokens in GET request parameters. Exposure of server logs or a machine/stack processing them would expose user data in turn."
+      ]
+    }
+    {
+      "name": "Input Validation",
+      "controls": [
+        "Make sure that DOS attacks on your APIs won’t cripple your site. At a minimum, have rate limiters on your slower API paths like login and token generation routines. Consider CAPTCHA on front-end APIs to protect back-end services against DOS."
+        "Enforce sanity limits on the size and structure of user submitted data and requests."
+        "Use Distributed Denial of Service (DDOS) mitigation via a global caching proxy service like CloudFlare. This can be turned on if you suffer a DDOS attack and otherwise function as your DNS lookup."
       ]
     }
   ],
@@ -72,6 +122,62 @@
         "Secure authentication tokens",
         "Implement multi-factor authentication",
         "Protect against insecure authentication"
+      ]
+    }
+  ],
+  "API": [
+    {
+      "name": "Authentication",
+      "controls": [
+       "Don't use Basic Auth. Use standard authentication instead (e.g., JWT)."
+       "Don't reinvent the wheel in Authentication, token generation, password storage. Use the standards."
+       "Use Max Retry and jail features in Login."
+       "Use encryption on all sensitive data."
+      ]
+    },
+    {
+      "name": "Authorization",
+      "controls": [
+        "Always validate redirect_uri server-side to allow only safelisted URLs."
+        "Always try to exchange for code and not tokens (don't allow response_type=token)."
+        "Use state parameter with a random hash to prevent CSRF on the OAuth authorization process."
+        "Define the default scope, and validate scope parameters for each application."
+      ]
+    },
+    {
+      "name": "JWT",
+      "controls": [
+        "Always validate redirect_uri server-side to allow only safelisted URLs."
+        "Always try to exchange for code and not tokens (don't allow response_type=token)."
+        "Use state parameter with a random hash to prevent CSRF on the OAuth authorization process."
+        "Define the default scope, and validate scope parameters for each application."
+      ]
+    },
+    {
+      "name": "Authorization",
+      "controls": [
+        "Always validate redirect_uri server-side to allow only safelisted URLs."
+        "Always try to exchange for code and not tokens (don't allow response_type=token)."
+        "Use state parameter with a random hash to prevent CSRF on the OAuth authorization process."
+        "Define the default scope, and validate scope parameters for each application."
+      ]
+    },
+    {
+      "name": "Authorization",
+      "controls": [
+        "Always validate redirect_uri server-side to allow only safelisted URLs."
+        "Always try to exchange for code and not tokens (don't allow response_type=token)."
+        "Use state parameter with a random hash to prevent CSRF on the OAuth authorization process."
+        "Define the default scope, and validate scope parameters for each application."
+      ]
+    },
+    {
+      "name": "Authorization",
+      "controls": [
+        "Always validate redirect_uri server-side to allow only safelisted URLs."
+        "Always try to exchange for code and not tokens (don't allow response_type=token)."
+        "Use state parameter with a random hash to prevent CSRF on the OAuth authorization process."
+        "Define the default scope, and validate scope parameters for each application."
       ]
     }
   ],
