@@ -10,24 +10,13 @@ let checklistData = {};
 
 // Initialize the application
 async function init() {
-  // Load checklist data
-  try {
-    const response = await fetch('checklist.json');
-    checklistData = await response.json();
-    console.log('Checklist data loaded successfully');
-  } catch (error) {
-    console.error('Error loading checklist data:', error);
-    categoryView.innerHTML = '<p>Error loading checklist data. Please try again later.</p>';
-    return;
-  }
-
   platformSelect.addEventListener('change', handlePlatformChange);
   renderCategories([]);
   renderControls([]);
 }
 
 // Handle platform selection
-function handlePlatformChange() {
+async function handlePlatformChange() {
   currentTech = platformSelect.value;
   currentCategory = null;
   
@@ -37,9 +26,20 @@ function handlePlatformChange() {
     return;
   }
   
-  const categories = checklistData[currentTech] || [];
-  renderCategories(categories);
-  renderControls([]);
+  try {
+    // Load the specific technology file
+    const response = await fetch(`checklist-${currentTech}.json`);
+    const techData = await response.json();
+    
+    // Store the loaded data in our checklistData object
+    checklistData[currentTech] = techData;
+    
+    renderCategories(techData);
+    renderControls([]);
+  } catch (error) {
+    console.error(`Error loading data for ${currentTech}:`, error);
+    categoryView.innerHTML = `<p>Error loading data for ${currentTech}. Please try again later.</p>`;
+  }
 }
 
 // Render category flashcards
@@ -47,7 +47,7 @@ function renderCategories(categories) {
   categoryView.innerHTML = '';
   
   if (!categories.length) {
-    categoryView.innerHTML = '<p>Loading...</p>';
+    categoryView.innerHTML = '<p>Select a technology to view categories</p>';
     return;
   }
   
@@ -76,7 +76,6 @@ function renderControls(controls) {
   if (currentCategory) {
     const backButton = document.createElement('div');
     backButton.className = 'back-button';
-//    backButton.textContent = '← Back to categories';
     backButton.addEventListener('click', () => {
       currentCategory = null;
       const categories = checklistData[currentTech] || [];
