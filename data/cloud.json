@@ -1,0 +1,47 @@
+[
+  {
+    "name": "AWS Security",
+    "controls": [
+      "Implement IAM roles and policies with least privilege",
+      "Enable CloudTrail logging for all regions",
+      "Use AWS Config for resource tracking",
+      "Enable GuardDuty for threat detection",
+      "Implement VPC security groups properly",
+      "Encrypt S3 buckets and enable versioning",
+      "Use AWS KMS for encryption key management",
+      "Enable multi-factor authentication for root account",
+      "Implement security groups and NACLs properly",
+      "Regularly rotate access keys and credentials"
+    ]
+  },
+  {
+    "name": "Azure Security",
+    "controls": [
+      "Implement Azure AD with conditional access",
+      "Use Azure Security Center for monitoring",
+      "Enable Azure Defender for advanced protection",
+      "Implement network security groups properly",
+      "Use Azure Key Vault for secrets management",
+      "Enable Azure Monitor and Log Analytics",
+      "Implement Azure Policy for compliance",
+      "Use managed identities for resources",
+      "Enable JIT VM access with Azure Security Center",
+      "Encrypt storage accounts and virtual disks"
+    ]
+  },
+  {
+    "name": "GCP Security",
+    "controls": [
+      "Implement Cloud Identity and Access Management",
+      "Use VPC Service Controls for data isolation",
+      "Enable Security Command Center",
+      "Use Cloud KMS for encryption key management",
+      "Implement Cloud Audit Logging for all services",
+      "Use Identity-Aware Proxy for secure access",
+      "Implement firewall rules with least privilege",
+      "Enable Data Loss Prevention API",
+      "Use Cloud Security Scanner for vulnerabilities",
+      "Implement organization policies for compliance"
+    ]
+  }
+]
