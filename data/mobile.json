@@ -1,0 +1,29 @@
+[
+  {
+    "name": "Data Storage",
+    "controls": [
+      "Use secure storage for sensitive data",
+      "Encrypt sensitive data at rest",
+      "Avoid storing sensitive data in plain text",
+      "Use Keychain (iOS) and Keystore (Android)",
+      "Implement secure file storage practices",
+      "Protect against insecure data storage",
+      "Use encrypted databases when needed",
+      "Secure app-specific storage areas",
+      "Implement proper cache management",
+      "Clear sensitive data from memory after use"
+    ]
+  },
+  {
+    "name": "Authentication",
+    "controls": [
+      "Implement biometric authentication securely",
+      "Use secure token storage",
+      "Implement session timeout",
+      "Protect against credential caching",
+      "Secure authentication tokens",
+      "Implement multi-factor authentication",
+      "Protect against insecure authentication"
+    ]
+  }
+]
