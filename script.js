@@ -6,7 +6,6 @@ const controlsView = document.getElementById('controls-view');
 // Current state
 let currentTech = '';
 let currentCategory = null;
-let checklistData = {};
 
 // Initialize the application
 async function init() {
@@ -27,20 +26,20 @@ async function handlePlatformChange() {
   }
   
   try {
-    // Load the specific technology file
-    const response = await fetch(`checklist-${currentTech}.json`);
-    const techData = await response.json();
-    
-    // Store the loaded data in our checklistData object
-    checklistData[currentTech] = techData;
-    
-    renderCategories(techData);
+    // Load the specific technology file from the data folder
+    const response = await fetch(`data/${currentTech}.json`);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const categories = await response.json();
+    renderCategories(categories);
     renderControls([]);
   } catch (error) {
     console.error(`Error loading data for ${currentTech}:`, error);
     categoryView.innerHTML = `<p>Error loading data for ${currentTech}. Please try again later.</p>`;
   }
 }
+
 
 // Render category flashcards
 function renderCategories(categories) {
