@@ -36,23 +36,25 @@ async function handlePlatformChange() {
     renderControls([]);
   } catch (error) {
     console.error(`Error loading data for ${currentTech}:`, error);
-    categoryView.innerHTML = `<p class="error">Error loading data for ${currentTech}. Please try again later.</p>`;
+    categoryView.innerHTML = `<div class="empty-state">Error loading data for ${currentTech}. Please try again later.</div>`;
   }
 }
 
 // Render category flashcards in grid layout
 function renderCategories(categories) {
   categoryView.innerHTML = '';
-  controlsView.innerHTML = '';
   
   if (!categories.length) {
     if (currentTech) {
-      categoryView.innerHTML = '<p>Loading categories...</p>';
+      categoryView.innerHTML = '<div class="empty-state">No categories found for this platform.</div>';
     } else {
-      categoryView.innerHTML = '<p>Select a platform to view categories</p>';
+      categoryView.innerHTML = '<div class="empty-state">Select a platform to view categories</div>';
     }
     return;
   }
+  
+  const gridContainer = document.createElement('div');
+  gridContainer.className = 'categories-grid';
   
   categories.forEach(category => {
     const flashcard = document.createElement('div');
@@ -62,14 +64,16 @@ function renderCategories(categories) {
       <p>Click to view controls</p>
     `;
     flashcard.addEventListener('click', () => showCategoryControls(category));
-    categoryView.appendChild(flashcard);
+    gridContainer.appendChild(flashcard);
   });
+  
+  categoryView.appendChild(gridContainer);
 }
 
 // Show controls for a specific category
 function showCategoryControls(category) {
   currentCategory = category;
-  categoryView.innerHTML = ''; // Clear categories view
+  categoryView.style.display = 'none'; // Hide categories view
   renderControls(category.controls);
 }
 
@@ -83,10 +87,11 @@ function renderControls(controls) {
     
     const backButton = document.createElement('div');
     backButton.className = 'back-button';
-    backButton.innerHTML = '&larr; Back to categories';
+    backButton.textContent = 'Back to categories';
     backButton.addEventListener('click', () => {
       currentCategory = null;
-      handlePlatformChange(); // Reload categories
+      categoryView.style.display = 'grid'; // Show categories view again
+      controlsView.innerHTML = '';
     });
     
     const title = document.createElement('h2');
@@ -100,15 +105,15 @@ function renderControls(controls) {
       const reference = document.createElement('a');
       reference.className = 'reference-link';
       reference.href = currentCategory.reference;
-      reference.textContent = 'Reference &rarr;';
+      reference.textContent = 'View reference';
       reference.target = '_blank';
       headerDiv.appendChild(reference);
     }
     
     controlsView.appendChild(headerDiv);
     
-    const controlsGrid = document.createElement('div');
-    controlsGrid.className = 'grid-container';
+    const gridContainer = document.createElement('div');
+    gridContainer.className = 'controls-grid';
     
     controls.forEach((control, index) => {
       const controlItem = document.createElement('div');
@@ -116,10 +121,10 @@ function renderControls(controls) {
       controlItem.innerHTML = `
         <span class="index">${index + 1}.</span> ${control}
       `;
-      controlsGrid.appendChild(controlItem);
+      gridContainer.appendChild(controlItem);
     });
     
-    controlsView.appendChild(controlsGrid);
+    controlsView.appendChild(gridContainer);
   } else {
     controlsView.innerHTML = '';
   }
