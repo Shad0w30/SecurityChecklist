@@ -46,9 +46,9 @@ function renderCategories(categories) {
   
   if (!categories.length) {
     if (currentTech) {
-      categoryView.innerHTML = '<div class="empty-state">No categories found for this platform.</div>';
+      categoryView.innerHTML = '<div class="empty-state">Loading...</div>';
     } else {
-      categoryView.innerHTML = '<div class="empty-state">Select a platform to view categories</div>';
+      categoryView.innerHTML = '<div class="empty-state">0_0</div>';
     }
     return;
   }
