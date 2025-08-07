@@ -81,7 +81,16 @@ select {
   font-size: 1rem;
 }
 
-.flashcard-view {
+/* Grid layout for categories */
+.categories-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--spacing-lg);
+  margin-bottom: var(--spacing-xl);
+}
+
+/* Grid layout for controls */
+.controls-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: var(--spacing-lg);
@@ -96,9 +105,9 @@ select {
   cursor: pointer;
   transition: all 0.3s ease;
   box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-  margin-bottom: var(--spacing-md);
   position: relative;
   overflow: hidden;
+  height: 100%;
 }
 
 .flashcard::before {
@@ -145,9 +154,9 @@ select {
   background-color: var(--white);
   border-radius: var(--radius-md);
   padding: var(--spacing-md);
-  margin-bottom: var(--spacing-sm);
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   border-left: 4px solid var(--primary-red);
+  height: 100%;
 }
 
 .control-item .index {
@@ -157,14 +166,26 @@ select {
 }
 
 .back-button {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
   margin-bottom: var(--spacing-md);
   color: var(--primary-blue);
   cursor: pointer;
   font-weight: bold;
-  padding: var(--spacing-sm);
+  padding: var(--spacing-sm) var(--spacing-md);
   background-color: var(--white);
   border-radius: var(--radius-sm);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  transition: all 0.2s ease;
+}
+
+.back-button:hover {
+  background-color: #f0f0f0;
+}
+
+.back-button::before {
+  content: "←";
+  margin-right: var(--spacing-sm);
 }
 
 .category-title {
@@ -173,14 +194,29 @@ select {
 }
 
 .reference-link {
-  display: block;
+  display: inline-block;
   margin-bottom: var(--spacing-lg);
   color: var(--primary-blue);
   text-decoration: none;
+  font-weight: 600;
+  padding: var(--spacing-sm) 0;
 }
 
 .reference-link:hover {
   text-decoration: underline;
+}
+
+.reference-link::after {
+  content: " →";
+}
+
+.empty-state {
+  text-align: center;
+  padding: var(--spacing-xl);
+  color: var(--primary-purple);
+  background-color: var(--white);
+  border-radius: var(--radius-md);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 @media (max-width: 768px) {
@@ -188,7 +224,8 @@ select {
     padding: var(--spacing-md);
   }
   
-  .flashcard-view {
+  .categories-grid,
+  .controls-grid {
     grid-template-columns: 1fr;
   }
 }
