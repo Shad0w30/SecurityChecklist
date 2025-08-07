@@ -1,0 +1,47 @@
+[
+  {
+    "name": "CISSP",
+    "controls": [
+      "Security and Risk Management concepts",
+      "Asset Security classification and protection",
+      "Security Architecture and Engineering principles",
+      "Communication and Network Security",
+      "Identity and Access Management controls",
+      "Security Assessment and Testing methodologies",
+      "Security Operations best practices",
+      "Software Development Security principles",
+      "Legal, regulations, and compliance requirements",
+      "Incident response and disaster recovery planning"
+    ]
+  },
+  {
+    "name": "CISM",
+    "controls": [
+      "Information Security Governance framework",
+      "Information Risk Management practices",
+      "Information Security Program development",
+      "Incident Management and response",
+      "Security metrics and reporting",
+      "Compliance management strategies",
+      "Security policy development",
+      "Business continuity planning",
+      "Vendor and third-party risk management",
+      "Security awareness and training programs"
+    ]
+  },
+  {
+    "name": "CCSP",
+    "controls": [
+      "Cloud Concepts, Architecture and Design",
+      "Cloud Data Security principles",
+      "Cloud Platform and Infrastructure Security",
+      "Cloud Application Security best practices",
+      "Cloud Security Operations",
+      "Legal, Risk and Compliance in cloud",
+      "Secure cloud migration strategies",
+      "Cloud identity and access management",
+      "Cloud encryption and key management",
+      "Incident response in cloud environments"
+    ]
+  }
+]
