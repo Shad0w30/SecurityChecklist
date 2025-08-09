@@ -72,7 +72,7 @@
     ]
   },
   {
-    "name": "Security Headers & Configuration",
+    "name": "Security Headers",
     "controls": [
       "Add CSP header to mitigate XSS and data injection attacks. This is important.",
       "Add CSRF header to prevent cross site request forgery. Also add SameSite attributes on cookies.",
