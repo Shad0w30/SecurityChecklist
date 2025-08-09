@@ -61,7 +61,6 @@ function renderCategories(categories) {
     flashcard.className = 'flashcard';
     flashcard.innerHTML = `
       <h3>${category.name} <span class="count">${category.controls.length}</span></h3>
-//      <p>Click to view controls</p>
     `;
     flashcard.addEventListener('click', () => showCategoryControls(category));
     gridContainer.appendChild(flashcard);
